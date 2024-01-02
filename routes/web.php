@@ -5,16 +5,15 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\InertiaController;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+use App\Http\Controllers\ItemController;
+
+/**
+ * リソースですべてここに来る
+ */
+Route::resource('/items', ItemController::class)
+->middleware(['auth', 'verified']);
+
+
 
 Route::get('/inertia/index', [InertiaController::class, 'index'])->name('inertia.index');
 Route::get('/inertia/create', [InertiaController::class, 'create'])->name('inertia.create');
