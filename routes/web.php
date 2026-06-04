@@ -5,6 +5,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\InertiaController;
+use App\Http\Controllers\MailSendController;
+use App\Http\Controllers\CompaniesController;
+use App\Http\Controllers\EmployeesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,6 +35,17 @@ Route::get('/component-test', function () {
     return Inertia::render('ComponentTest');
     }
 );
+
+// MailSend
+Route::get('/mailsend/dashboard', [MailSendController::class, 'index'])->name('dashboard.index');
+Route::get('/mailsend/send', [MailSendController::class, 'create'])->name('send.create');
+
+// Companies
+Route::get('/companies/index',[CompaniesController::class, 'index'])->name('companies.index');
+
+// Employees
+Route::get('/employees/index',[EmployeesController::class, 'index'])->name('employees.index');
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
