@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 </script>
 
 <template>
@@ -15,6 +15,21 @@ import { Head } from '@inertiajs/vue3';
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">You're logged in!</div>
+                </div>
+
+                <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    <Link
+                        :href="route('companies.index')"
+                        class="flex items-center gap-4 rounded-lg bg-white p-6 shadow-sm ring-1 ring-gray-200 hover:ring-blue-500 transition"
+                    >
+                        <div class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600 text-2xl">
+                            🏢
+                        </div>
+                        <div>
+                            <div class="font-semibold text-gray-800">会社ダッシュボード</div>
+                            <div class="text-sm text-gray-500">会社一覧を表示</div>
+                        </div>
+                    </Link>
                 </div>
             </div>
         </div>

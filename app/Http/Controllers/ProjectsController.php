@@ -2,39 +2,43 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Models\Company;
 use Inertia\Inertia;
 
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class CompaniesController extends Controller
+class ProjectsController extends Controller
 {
   public function index()
   {
-    $companies = Company::all();
+    $projects = Project::with('company')->get();
 
-    return Inertia::render('Companies/Index', [
-      'companies' => $companies,
+    return Inertia::render('Projects/Index', [
+      'projects' => $projects,
     ]);
   }
 
   public function create()
   {
-    return Inertia::render('Companies/Create');
+    return Inertia::render('Projects/Create',[
+      'companies' => Company::all(),
+    ]);
   }
 
 
   public function store(Request $request)
   {
     $validated = $request->validate([
-      'name' => 'required',
-      'mail' => 'nullable'
+      'title' => 'required',
+      'company_id' => 'required',
+      'detail' => 'nullable'
     ]);
 
-    Company::create($validated);
+    Project::create($validated);
 
-    return to_route('companies.index')
+    return to_route('projects.index')
       ->with([
         'message' => '作成しました。',
         'status' => 'success'
@@ -44,13 +48,14 @@ class CompaniesController extends Controller
   public function edit(int $id)
   {
     try {
-      $company = Company::findOrFail($id);
+      $project = Project::findOrFail($id);
 
-      return Inertia::render('Companies/Edit', [
-        'company' => $company
+      return Inertia::render('Projects/Edit', [
+        'project' => $project,
+        'companies' => Company::all(),
       ]);
     } catch (ModelNotFoundException $e) {
-      return to_route('companies.index')
+      return to_route('projects.index')
         ->with([
           'message' => '指定のデータが見つかりません。',
           'status' => 'danger'
@@ -60,16 +65,17 @@ class CompaniesController extends Controller
 
   public function update(Request $request, int $id)
   {
-    $company = Company::findOrFail($id);
+    $project = Project::findOrFail($id);
 
     $validated = $request->validate([
-      'name' => 'required',
-      'mail' => 'nullable'
+      'title' => 'required',
+      'company_id' => 'required',
+      'detail' => 'nullable'
     ]);
 
-    $company->update($validated);
+    $project->update($validated);
 
-    return to_route('companies.index')
+    return to_route('projects.index')
       ->with([
         'message' => '更新しました。',
         'status' => 'success'
@@ -78,11 +84,11 @@ class CompaniesController extends Controller
 
   public function destroy(int $id)
   {
-    $company = Company::findOrFail($id);
+    $project = Project::findOrFail($id);
 
-    $company->delete();
+    $project->delete();
 
-    return to_route('companies.index')
+    return to_route('projects.index')
       ->with([
         'message' => '削除しました。',
         'status' => 'danger'
