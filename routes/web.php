@@ -9,6 +9,7 @@ use App\Http\Controllers\MailSendController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\LanguagesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,6 +81,22 @@ Route::prefix('projects')
     Route::patch('/{id}', [ProjectsController::class, 'update'])->name('update');
     Route::delete('/{id}', [ProjectsController::class, 'destroy'])->name('destroy');
   });
+
+
+// Languages
+// Projects
+Route::prefix('languages')
+  ->name('languages.')
+  ->group(function () {
+    Route::get('/index', [LanguagesController::class, 'index'])->name('index');
+    Route::get('/create', [LanguagesController::class, 'create'])->name('create');
+    Route::post('/store', [LanguagesController::class, 'store'])->name('store');
+    // Route::get('/show{id}',[LanguagesController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [LanguagesController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [LanguagesController::class, 'update'])->name('update');
+    Route::delete('/{id}', [LanguagesController::class, 'destroy'])->name('destroy');
+  });
+
 
 
 Route::get('/', function () {

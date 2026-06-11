@@ -26,6 +26,10 @@ import { Link } from '@inertiajs/vue3'
             案件一覧
           </Link>
 
+          <Link v-bind:href="route('languages.index')" class="font-medium text-gray-700 hover:text-blue-600">
+              言語一覧
+          </Link>
+
           <Link v-bind:href="route('send.create')" class="font-medium text-gray-700 hover:text-blue-600">
             メール作成
           </Link>
