@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmployeeRequest extends FormRequest
+class StoreProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,14 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required',
-            'company_id'=>'required|exists:companies,id'
+          // Projectモデルのバリデーション
+          'title' => 'required',
+          'company_id' => 'required',
+          'detail' => 'nullable',
+    
+          // チェックボックスで選ばれたlanguage.idたち
+          'language_ids' => 'nullable|array',
+          'language_ids.*' => 'exists:languages,id',
         ];
     }
 }

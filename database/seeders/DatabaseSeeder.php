@@ -13,6 +13,8 @@ public function run()
         CompanySeeder::class,
         EmployeeSeeder::class,
         ProjectSeeder::class,
+        LanguageSeeder::class,
+        Attendance::class,
     ]);
 }
 

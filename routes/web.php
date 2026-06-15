@@ -60,13 +60,17 @@ Route::prefix('companies')
 
 
 // Employees
-Route::get('/employees/index', [EmployeesController::class, 'index'])->name('employees.index');
-Route::get('/employees/create', [EmployeesController::class, 'create'])->name('employees.create');
-Route::post('/employees/store', [EmployeesController::class, 'store'])->name('employees.store');
-// Route::get('/employees/show{id}',[EmployeesController::class, 'show'])->name('employees.show');
-Route::get('/employees/{id}/edit', [EmployeesController::class, 'edit'])->name('employees.edit');
-Route::patch('/employees/{employee}', [EmployeesController::class, 'update'])->name('employees.update');
-Route::delete('/employees/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
+Route::prefix('employees')
+  ->name('employees.')
+  ->group(function () {
+    Route::get('/index', [ProjectsController::class, 'index'])->name('index');
+    Route::get('/create', [ProjectsController::class, 'create'])->name('create');
+    Route::post('/store', [ProjectsController::class, 'store'])->name('store');
+    // Route::get('/show{id}',[ProjectsController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [ProjectsController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [ProjectsController::class, 'update'])->name('update');
+    Route::delete('/{id}', [ProjectsController::class, 'destroy'])->name('destroy');
+  });
 
 
 // Projects
@@ -81,6 +85,20 @@ Route::prefix('projects')
     Route::patch('/{id}', [ProjectsController::class, 'update'])->name('update');
     Route::delete('/{id}', [ProjectsController::class, 'destroy'])->name('destroy');
   });
+
+  // Attendances
+Route::prefix('attendances')
+  ->name('attendances.')
+  ->group(function () {
+    Route::get('/index', [AttendancesController::class, 'index'])->name('index');
+    Route::get('/create', [AttendancesController::class, 'create'])->name('create');
+    Route::post('/store', [AttendancesController::class, 'store'])->name('store');
+    Route::get('/show{id}',[AttendancesController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [AttendancesController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [AttendancesController::class, 'update'])->name('update');
+    Route::delete('/{id}', [AttendancesController::class, 'destroy'])->name('destroy');
+  });
+
 
 
 // Languages

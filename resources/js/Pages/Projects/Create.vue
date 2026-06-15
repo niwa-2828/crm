@@ -7,12 +7,14 @@ import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
   companies: Array,
+  languages: Array,
 })
 
 const form = useForm({
   title: '',
   company_id: '',
   detail: '',
+  language_ids: [],
 })
 
 const submit = () => {
@@ -21,15 +23,8 @@ const submit = () => {
     return
   }
 
-  router.post(route('projects.store'), form, {
-    onSuccess: () => {
-      form.title = ''
-      form.company_id = ''
-      form.detail=''
-    }
-  })
+  router.post(route('projects.store'), form)
 }
-
 
 </script>
 
@@ -57,10 +52,10 @@ const submit = () => {
 
         <div class="p-4">
           <select v-model="form.company_id" class="w-full rounded border p-2">
-           <option value="">選択してください。</option>
-           <option v-for="company in props.companies" :key="company.id" :value="company.id">
-            {{ company.name }}
-           </option>
+            <option value="">選択してください。</option>
+            <option v-for="company in props.companies" :key="company.id" :value="company.id">
+              {{ company.name }}
+            </option>
           </select>
         </div>
 
@@ -72,6 +67,18 @@ const submit = () => {
           <textarea v-model="form.detail" rows="10" placeholder="入力してください。" class="w-full rounded border p-2" />
         </div>
 
+        <div class="bg-gray-100 p-4 font-medium border-t">
+          使用言語
+        </div>
+
+        <div class="p-4">
+          <div class="w-full rounded border p-3">
+            <label v-for="language in props.languages" :key="language.id" class="mr-4 inline-flex items-center gap-2">
+              <input type="checkbox" :value="language.id" v-model="form.language_ids" />
+              <span>{{ language.language }}</span>
+            </label>
+          </div>
+        </div>
       </div>
 
       <div class="mt-6 flex justify-center">

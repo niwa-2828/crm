@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreLanguageRequest;
+use App\Http\Requests\UpdateLanguageRequest;
+
 use App\Models\Language;
 use Inertia\Inertia;
 
-use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class LanguagesController extends Controller
@@ -27,11 +29,9 @@ class LanguagesController extends Controller
   }
 
 
-  public function store(Request $request)
+  public function store(StoreLanguageRequest $request)
   {
-    $validated = $request->validate([
-      'language' => 'required',
-    ]);
+    $validated = $request->validated();
 
     Language::create($validated);
 
@@ -59,13 +59,11 @@ class LanguagesController extends Controller
     }
   }
 
-  public function update(Request $request, int $id)
+  public function update(UpdateLanguageRequest $request, int $id)
   {
     $language = Language::findOrFail($id);
 
-    $validated = $request->validate([
-      'language' => $language,
-    ]);
+    $validated = $request->validated();
 
     $language->update($validated);
 

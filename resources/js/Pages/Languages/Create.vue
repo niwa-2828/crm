@@ -15,11 +15,7 @@ const submit = () => {
     return
   }
 
-  router.post(route('languages.store'), form, {
-    onSuccess: () => {
-      form.language = ''
-    }
-  })
+  router.post(route('languages.store'), form)
 }
 
 

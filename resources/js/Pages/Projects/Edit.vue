@@ -6,13 +6,19 @@ import { Link } from '@inertiajs/vue3';
 
 const props = defineProps({
   project: Object,
-  companies: Array
+  companies: Array,
+  languages: Array,
 })
 
 const form = reactive({
   title: props.project.title,
   company_id: props.project.company_id,
-  detail: props.project.detail
+  detail: props.project.detail,
+
+  // 中間テーブルの言語idを呼び出す。
+  language_ids: props.project.languages.map(
+    language => language.id
+  ),
 })
 
 const submit = () => {
@@ -63,6 +69,19 @@ const submit = () => {
 
         <div class="p-4">
           <textarea v-model="form.detail" rows="10" class="w-full rounded border p-2" />
+        </div>
+
+        <div class="bg-gray-100 p-4 font-medium border-t">
+          使用言語
+        </div>
+
+        <div class="p-4">
+          <div class="w-full rounded border p-3">
+            <label v-for="language in props.languages" :key="language.id" class="mr-4 inline-flex items-center gap-2">
+              <input type="checkbox" :value="language.id" v-model="form.language_ids" />
+              <span>{{ language.language }}</span>
+            </label>
+          </div>
         </div>
 
       </div>

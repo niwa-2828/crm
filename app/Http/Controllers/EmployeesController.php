@@ -6,8 +6,9 @@ use App\Models\Employee;
 use App\Models\Company;
 use Inertia\Inertia;
 
-use App\Http\Requests\EmployeeRequest;
-use App\Http\Requests\EmployeeUpdateRequest;
+use App\Http\Requests\StoreEmployeeRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
+
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class EmployeesController extends Controller
@@ -29,9 +30,11 @@ class EmployeesController extends Controller
   }
 
 
-  public function store(EmployeeRequest $request)
+  public function store(StoreEmployeeRequest $request)
   {
-    Employee::create($request->validated());
+    $validated = $request->validated();
+
+    Employee::create($validated);
 
     return to_route('employees.index')
       ->with([
@@ -58,9 +61,13 @@ class EmployeesController extends Controller
     }
   }
 
-  public function update(EmployeeUpdateRequest $request, Employee $employee)
+  public function update(UpdateEmployeeRequest $request, int $id)
   {
-    $employee->update($request->validated());
+    $employee = Company::findOrFail($id);
+
+    $validated = $request->validated();
+
+    $employee->update($validated);
 
     return to_route('employees.index')
       ->with([
@@ -69,8 +76,10 @@ class EmployeesController extends Controller
       ]);
   }
 
-  public function destroy(Employee $employee)
+  public function destroy(int $id)
   {
+    $employee = Employee::findOrFail($id);
+
     $employee->delete();
 
     return to_route('employees.index')

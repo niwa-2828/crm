@@ -20,7 +20,7 @@ const deleteLanguage = id => {
   <FlashMessage />
   <MailSendLayout>
     <div class="mb-6 flex items-center justify-between">
-      <h1 class="text-3xl font-bold">案件一覧</h1>
+      <h1 class="text-3xl font-bold">言語一覧</h1>
 
       <div class="flex gap-1">
         <Link :href="route('languages.create')" class="rounded bg-blue-600 px-4 py-2 text-white">

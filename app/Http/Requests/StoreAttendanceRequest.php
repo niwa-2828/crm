@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CompanyUpdateRequest extends FormRequest
+class StoreAttendanceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class CompanyUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return false;
     }
 
     /**
@@ -21,11 +21,10 @@ class CompanyUpdateRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules() : array
+    public function rules()
     {
         return [
-            'name'=>'required',
-            'mail'=>'nullable',
+            //
         ];
     }
 }

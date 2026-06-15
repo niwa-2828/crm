@@ -23,7 +23,7 @@ class Project extends Model
     return $this->belongsTo(Company::class);
   }
 
-  public function Language()
+  public function languages()
   {
     return $this->belongsToMany(Language::class);
   }
