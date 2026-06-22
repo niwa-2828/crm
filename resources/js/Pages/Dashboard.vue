@@ -1,6 +1,11 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, Link } from '@inertiajs/vue3';
+
+const props = defineProps({
+  authUser: Object,
+})
+
 </script>
 
 <template>
@@ -40,6 +45,20 @@ import { Head, Link } from '@inertiajs/vue3';
               <div class="text-sm text-gray-500">勤怠管理システムを表示</div>
             </div>
           </Link>
+
+          <Link 
+          v-if = "props.authUser.role === 'admin'"
+          :href="route('admin.attendances.index')"
+            class="flex items-center gap-4 rounded-lg bg-white p-6 shadow-sm ring-1 ring-gray-200 hover:ring-blue-500 transition">
+            <div class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600 text-2xl">
+              🖋
+            </div>
+            <div>
+              <div class="font-semibold text-gray-800">管理者用勤怠管理</div>
+              <div class="text-sm text-gray-500">管理者用勤怠管理システムを表示</div>
+            </div>
+          </Link>
+          
         </div>
       </div>
     </div>

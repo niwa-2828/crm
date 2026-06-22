@@ -3,13 +3,17 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Http\Controllers\InertiaController;
 use App\Http\Controllers\MailSendController;
-use App\Http\Controllers\CompaniesController;
-use App\Http\Controllers\EmployeesController;
-use App\Http\Controllers\ProjectsController;
-use App\Http\Controllers\LanguagesController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\AttendanceCorrectionRequestController;
+use App\Http\Controllers\AdminAttendanceRequestController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,13 +52,13 @@ Route::get('/mailsend/send', [MailSendController::class, 'create'])->name('send.
 Route::prefix('companies')
   ->name('companies.')
   ->group(function () {
-    Route::get('/index', [CompaniesController::class, 'index'])->name('index');
-    Route::get('/create', [CompaniesController::class, 'create'])->name('create');
-    Route::post('/store', [CompaniesController::class, 'store'])->name('store');
-    // Route::get('/show{id}',[CompaniesController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [CompaniesController::class, 'edit'])->name('edit');
-    Route::patch('/{id}', [CompaniesController::class, 'update'])->name('update');
-    Route::delete('/{id}', [CompaniesController::class, 'destroy'])->name('destroy');
+    Route::get('/index', [CompanyController::class, 'index'])->name('index');
+    Route::get('/create', [CompanyController::class, 'create'])->name('create');
+    Route::post('/store', [CompanyController::class, 'store'])->name('store');
+    // Route::get('/show{id}',[CompanyController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [CompanyController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [CompanyController::class, 'update'])->name('update');
+    Route::delete('/{id}', [CompanyController::class, 'destroy'])->name('destroy');
   });
 
 
@@ -63,13 +67,13 @@ Route::prefix('companies')
 Route::prefix('employees')
   ->name('employees.')
   ->group(function () {
-    Route::get('/index', [ProjectsController::class, 'index'])->name('index');
-    Route::get('/create', [ProjectsController::class, 'create'])->name('create');
-    Route::post('/store', [ProjectsController::class, 'store'])->name('store');
-    // Route::get('/show{id}',[ProjectsController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [ProjectsController::class, 'edit'])->name('edit');
-    Route::patch('/{id}', [ProjectsController::class, 'update'])->name('update');
-    Route::delete('/{id}', [ProjectsController::class, 'destroy'])->name('destroy');
+    Route::get('/index', [EmployeeController::class, 'index'])->name('index');
+    Route::get('/create', [EmployeeController::class, 'create'])->name('create');
+    Route::post('/store', [EmployeeController::class, 'store'])->name('store');
+    // Route::get('/show{id}',[EmployeeController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [EmployeeController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [EmployeeController::class, 'update'])->name('update');
+    Route::delete('/{id}', [EmployeeController::class, 'destroy'])->name('destroy');
   });
 
 
@@ -77,44 +81,64 @@ Route::prefix('employees')
 Route::prefix('projects')
   ->name('projects.')
   ->group(function () {
-    Route::get('/index', [ProjectsController::class, 'index'])->name('index');
-    Route::get('/create', [ProjectsController::class, 'create'])->name('create');
-    Route::post('/store', [ProjectsController::class, 'store'])->name('store');
-    // Route::get('/show{id}',[ProjectsController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [ProjectsController::class, 'edit'])->name('edit');
-    Route::patch('/{id}', [ProjectsController::class, 'update'])->name('update');
-    Route::delete('/{id}', [ProjectsController::class, 'destroy'])->name('destroy');
+    Route::get('/index', [ProjectController::class, 'index'])->name('index');
+    Route::get('/create', [ProjectController::class, 'create'])->name('create');
+    Route::post('/store', [ProjectController::class, 'store'])->name('store');
+    // Route::get('/show{id}',[ProjectController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [ProjectController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [ProjectController::class, 'update'])->name('update');
+    Route::delete('/{id}', [ProjectController::class, 'destroy'])->name('destroy');
   });
-
-  // Attendances
-Route::prefix('attendances')
-  ->name('attendances.')
-  ->group(function () {
-    Route::get('/index', [AttendancesController::class, 'index'])->name('index');
-    Route::get('/create', [AttendancesController::class, 'create'])->name('create');
-    Route::post('/store', [AttendancesController::class, 'store'])->name('store');
-    Route::get('/show{id}',[AttendancesController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [AttendancesController::class, 'edit'])->name('edit');
-    Route::patch('/{id}', [AttendancesController::class, 'update'])->name('update');
-    Route::delete('/{id}', [AttendancesController::class, 'destroy'])->name('destroy');
-  });
-
-
 
 // Languages
-// Projects
 Route::prefix('languages')
   ->name('languages.')
   ->group(function () {
-    Route::get('/index', [LanguagesController::class, 'index'])->name('index');
-    Route::get('/create', [LanguagesController::class, 'create'])->name('create');
-    Route::post('/store', [LanguagesController::class, 'store'])->name('store');
-    // Route::get('/show{id}',[LanguagesController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [LanguagesController::class, 'edit'])->name('edit');
-    Route::patch('/{id}', [LanguagesController::class, 'update'])->name('update');
-    Route::delete('/{id}', [LanguagesController::class, 'destroy'])->name('destroy');
+    Route::get('/index', [LanguageController::class, 'index'])->name('index');
+    Route::get('/create', [LanguageController::class, 'create'])->name('create');
+    Route::post('/store', [LanguageController::class, 'store'])->name('store');
+    // Route::get('/show{id}',[LanguageController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [LanguageController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [LanguageController::class, 'update'])->name('update');
+    Route::delete('/{id}', [LanguageController::class, 'destroy'])->name('destroy');
   });
 
+// Attendances
+Route::prefix('attendances')
+  ->name('attendances.')
+  ->group(function () {
+    Route::get('/index', [AttendanceController::class, 'index'])->name('index');
+    Route::get('/create', [AttendanceController::class, 'create'])->name('create');
+    Route::post('/store', [AttendanceController::class, 'store'])->name('store');
+    Route::get('/show', [AttendanceController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [AttendanceController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [AttendanceController::class, 'update'])->name('update');
+    Route::delete('/{id}', [AttendanceController::class, 'destroy'])->name('destroy');
+  });
+
+// AttendanceCorrectionRequests
+Route::prefix('/attendances/correction-requests')
+  ->name('attendances.correction-requests.')
+  ->group(function () {
+    // Route::get('/index', [AttendanceCorrectionRequestController::class, 'index'])->name('index');
+    // Route::get('/create', [AttendanceCorrectionRequestController::class, 'create'])->name('create');
+    Route::post('/', [AttendanceCorrectionRequestController::class, 'store'])->name('store');
+    // Route::get('/show',[AttendanceCorrectionRequestController::class, 'show'])->name('show');
+    // Route::get('/{id}/edit', [AttendanceCorrectionRequestController::class, 'edit'])->name('edit');
+    // Route::patch('/{id}', [AttendanceCorrectionRequestController::class, 'update'])->name('update');
+    // Route::delete('/{id}', [AttendanceCorrectionRequestController::class, 'destroy'])->name('destroy');
+  });
+
+// AdminAttendanceRequests
+Route::middleware(['auth', 'admin', 'verified'])
+  ->prefix('/admin/attendances')
+  ->name('admin.attendances.')
+  ->group(function () {
+    Route::get('/index', [AdminAttendanceRequestController::class, 'index'])->name('index');
+    Route::get('/{id}', [AdminAttendanceRequestController::class, 'show'])->name('show');
+    Route::patch('/{id}/approve', [AdminAttendanceRequestController::class, 'approve'])->name('approve');
+    Route::patch('/{id}/reject', [AdminAttendanceRequestController::class, 'reject'])->name('reject');
+  });
 
 
 Route::get('/', function () {
@@ -127,7 +151,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-  return Inertia::render('Dashboard');
+  return Inertia::render('Dashboard', [
+    'authUser' => Auth::user(),
+  ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

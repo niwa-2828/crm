@@ -13,7 +13,7 @@ use App\Http\Requests\UpdateProjectRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 
-class ProjectsController extends Controller
+class ProjectController extends Controller
 {
   public function index()
   {

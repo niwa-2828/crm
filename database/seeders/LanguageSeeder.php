@@ -12,21 +12,21 @@ class LanguageSeeder extends Seeder
         Language::insert([
             [
                 'id' => 1,
-                'title' => 'Laravel',
+                'language' => 'Laravel',
 
             ],
             [
                 'id' => 2,
-                'title' => 'Vue.js',
+                'language' => 'Vue.js',
             ],
             [
                 'id' => 3,
-                'title' => 'Python',
+                'language' => 'Python',
 
             ],
             [
                 'id' => 4,
-                'title' => 'TypeScript',
+                'language' => 'TypeScript',
 
             ],
         ]);

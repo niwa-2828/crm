@@ -11,7 +11,7 @@ use App\Http\Requests\UpdateEmployeeRequest;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class EmployeesController extends Controller
+class EmployeeController extends Controller
 {
   public function index()
   {

@@ -10,7 +10,7 @@ use Inertia\Inertia;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class LanguagesController extends Controller
+class LanguageController extends Controller
 {
   public function index()
   {

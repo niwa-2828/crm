@@ -11,7 +11,7 @@ use App\Http\Requests\UpdateCompanyRequest;
 // use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class CompaniesController extends Controller
+class CompanyController extends Controller
 {
   public function index()
   {

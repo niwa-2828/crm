@@ -4,8 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-
-class StoreAttendanceRequest extends FormRequest
+class UpdateAdminAttendanceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +24,7 @@ class StoreAttendanceRequest extends FormRequest
     public function rules()
     {
         return [
-            'type' => 'required|in:clockIn,breakIn,breakOut,clockOut',
-            'nowTime'=>'required',
+            'admin_comment'=> 'nullable',
         ];
     }
 }
