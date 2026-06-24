@@ -24,7 +24,7 @@ const props = defineProps({
         </div>
 
         <div class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <Link :href="route('dashboard.index')"
+          <Link :href="route('mailsend.index')"
             class="flex items-center gap-4 rounded-lg bg-white p-6 shadow-sm ring-1 ring-gray-200 hover:ring-blue-500 transition">
             <div class="flex h-12 w-12 items-center justify-center rounded-full bg-blue-100 text-blue-600 text-2xl">
               🏢

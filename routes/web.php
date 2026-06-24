@@ -45,8 +45,14 @@ Route::get(
 );
 
 // MailSend
-Route::get('/mailsend/dashboard', [MailSendController::class, 'index'])->name('dashboard.index');
-Route::get('/mailsend/send', [MailSendController::class, 'create'])->name('send.create');
+Route::prefix('mailsend')
+  ->name('mailsend.')
+  ->group(function () {
+Route::get('/', [MailSendController::class, 'index'])->name('index');
+Route::get('/create', [MailSendController::class, 'create'])->name('create');
+Route::post('/confirm', [MailSendController::class, 'confirm'])->name('confirm');
+Route::post('/send', [MailSendController::class, 'send'])->name('send');
+  });
 
 // Companies
 Route::prefix('companies')
