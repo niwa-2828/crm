@@ -10,8 +10,12 @@ import { Link } from '@inertiajs/vue3'
       <div class="mx-auto max-w-7xl px-6">
         <nav class="flex h-16 items-center gap-8">
 
-          <Link v-bind:href="route('dashboard.index')" class="font-medium text-gray-700">
+          <Link v-bind:href="route('dashboard')" class="font-medium text-gray-700">
             Home
+          </Link>
+
+          <Link v-bind:href="route('mailsend.index')" class="font-medium text-gray-700">
+            Dashboard
           </Link>
 
           <Link v-bind:href="route('companies.index')" class="font-medium text-gray-700 hover:text-blue-600">
@@ -26,7 +30,11 @@ import { Link } from '@inertiajs/vue3'
             案件一覧
           </Link>
 
-          <Link v-bind:href="route('send.create')" class="font-medium text-gray-700 hover:text-blue-600">
+          <Link v-bind:href="route('languages.index')" class="font-medium text-gray-700 hover:text-blue-600">
+              言語一覧
+          </Link>
+
+          <Link v-bind:href="route('mailsend.create')" class="font-medium text-gray-700 hover:text-blue-600">
             メール作成
           </Link>
 

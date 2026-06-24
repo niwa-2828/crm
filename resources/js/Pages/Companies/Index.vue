@@ -25,7 +25,7 @@ const deleteCompany = id => {
         <button @click="router.get(route('companies.create'))" class="rounded bg-blue-600 px-4 py-2 text-white">
           会社登録
         </button>
-        <Link :href="route('dashboard.index')" class="rounded bg-pink-300 ml-1 px-4 py-2 text-white">
+        <Link :href="route('mailsend.index')" class="rounded bg-pink-300 ml-1 px-4 py-2 text-white">
           戻る
         </Link>
       </div>

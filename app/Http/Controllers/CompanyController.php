@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use Inertia\Inertia;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreCompanyRequest;
+use App\Http\Requests\UpdateCompanyRequest;
+
+// use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class CompaniesController extends Controller
+class CompanyController extends Controller
 {
   public function index()
   {
@@ -25,12 +28,9 @@ class CompaniesController extends Controller
   }
 
 
-  public function store(Request $request)
+  public function store(StoreCompanyRequest $request)
   {
-    $validated = $request->validate([
-      'name' => 'required',
-      'mail' => 'nullable'
-    ]);
+    $validated = $request->validated();
 
     Company::create($validated);
 
@@ -58,14 +58,11 @@ class CompaniesController extends Controller
     }
   }
 
-  public function update(Request $request, int $id)
+  public function update(UpdateCompanyRequest $request, int $id)
   {
     $company = Company::findOrFail($id);
 
-    $validated = $request->validate([
-      'name' => 'required',
-      'mail' => 'nullable'
-    ]);
+    $validated = $request->validated();
 
     $company->update($validated);
 

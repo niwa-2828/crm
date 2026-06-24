@@ -3,12 +3,17 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Http\Controllers\InertiaController;
 use App\Http\Controllers\MailSendController;
-use App\Http\Controllers\CompaniesController;
-use App\Http\Controllers\EmployeesController;
-use App\Http\Controllers\ProjectsController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\AttendanceCorrectionRequestController;
+use App\Http\Controllers\AdminAttendanceRequestController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,45 +45,105 @@ Route::get(
 );
 
 // MailSend
-Route::get('/mailsend/dashboard', [MailSendController::class, 'index'])->name('dashboard.index');
-Route::get('/mailsend/send', [MailSendController::class, 'create'])->name('send.create');
+Route::prefix('mailsend')
+  ->name('mailsend.')
+  ->group(function () {
+Route::get('/', [MailSendController::class, 'index'])->name('index');
+Route::get('/create', [MailSendController::class, 'create'])->name('create');
+Route::post('/confirm', [MailSendController::class, 'confirm'])->name('confirm');
+Route::post('/send', [MailSendController::class, 'send'])->name('send');
+  });
 
 // Companies
 Route::prefix('companies')
   ->name('companies.')
   ->group(function () {
-    Route::get('/index', [CompaniesController::class, 'index'])->name('index');
-    Route::get('/create', [CompaniesController::class, 'create'])->name('create');
-    Route::post('/store', [CompaniesController::class, 'store'])->name('store');
-    // Route::get('/show{id}',[CompaniesController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [CompaniesController::class, 'edit'])->name('edit');
-    Route::patch('/{id}', [CompaniesController::class, 'update'])->name('update');
-    Route::delete('/{id}', [CompaniesController::class, 'destroy'])->name('destroy');
+    Route::get('/index', [CompanyController::class, 'index'])->name('index');
+    Route::get('/create', [CompanyController::class, 'create'])->name('create');
+    Route::post('/store', [CompanyController::class, 'store'])->name('store');
+    // Route::get('/show{id}',[CompanyController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [CompanyController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [CompanyController::class, 'update'])->name('update');
+    Route::delete('/{id}', [CompanyController::class, 'destroy'])->name('destroy');
   });
 
 
 
 // Employees
-Route::get('/employees/index', [EmployeesController::class, 'index'])->name('employees.index');
-Route::get('/employees/create', [EmployeesController::class, 'create'])->name('employees.create');
-Route::post('/employees/store', [EmployeesController::class, 'store'])->name('employees.store');
-// Route::get('/employees/show{id}',[EmployeesController::class, 'show'])->name('employees.show');
-Route::get('/employees/{id}/edit', [EmployeesController::class, 'edit'])->name('employees.edit');
-Route::patch('/employees/{employee}', [EmployeesController::class, 'update'])->name('employees.update');
-Route::delete('/employees/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
+Route::prefix('employees')
+  ->name('employees.')
+  ->group(function () {
+    Route::get('/index', [EmployeeController::class, 'index'])->name('index');
+    Route::get('/create', [EmployeeController::class, 'create'])->name('create');
+    Route::post('/store', [EmployeeController::class, 'store'])->name('store');
+    // Route::get('/show{id}',[EmployeeController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [EmployeeController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [EmployeeController::class, 'update'])->name('update');
+    Route::delete('/{id}', [EmployeeController::class, 'destroy'])->name('destroy');
+  });
 
 
 // Projects
 Route::prefix('projects')
   ->name('projects.')
   ->group(function () {
-    Route::get('/index', [ProjectsController::class, 'index'])->name('index');
-    Route::get('/create', [ProjectsController::class, 'create'])->name('create');
-    Route::post('/store', [ProjectsController::class, 'store'])->name('store');
-    // Route::get('/show{id}',[ProjectsController::class, 'show'])->name('show');
-    Route::get('/{id}/edit', [ProjectsController::class, 'edit'])->name('edit');
-    Route::patch('/{id}', [ProjectsController::class, 'update'])->name('update');
-    Route::delete('/{id}', [ProjectsController::class, 'destroy'])->name('destroy');
+    Route::get('/index', [ProjectController::class, 'index'])->name('index');
+    Route::get('/create', [ProjectController::class, 'create'])->name('create');
+    Route::post('/store', [ProjectController::class, 'store'])->name('store');
+    // Route::get('/show{id}',[ProjectController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [ProjectController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [ProjectController::class, 'update'])->name('update');
+    Route::delete('/{id}', [ProjectController::class, 'destroy'])->name('destroy');
+  });
+
+// Languages
+Route::prefix('languages')
+  ->name('languages.')
+  ->group(function () {
+    Route::get('/index', [LanguageController::class, 'index'])->name('index');
+    Route::get('/create', [LanguageController::class, 'create'])->name('create');
+    Route::post('/store', [LanguageController::class, 'store'])->name('store');
+    // Route::get('/show{id}',[LanguageController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [LanguageController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [LanguageController::class, 'update'])->name('update');
+    Route::delete('/{id}', [LanguageController::class, 'destroy'])->name('destroy');
+  });
+
+// Attendances
+Route::prefix('attendances')
+  ->name('attendances.')
+  ->group(function () {
+    Route::get('/index', [AttendanceController::class, 'index'])->name('index');
+    Route::get('/create', [AttendanceController::class, 'create'])->name('create');
+    Route::post('/store', [AttendanceController::class, 'store'])->name('store');
+    Route::get('/show', [AttendanceController::class, 'show'])->name('show');
+    Route::get('/{id}/edit', [AttendanceController::class, 'edit'])->name('edit');
+    Route::patch('/{id}', [AttendanceController::class, 'update'])->name('update');
+    Route::delete('/{id}', [AttendanceController::class, 'destroy'])->name('destroy');
+  });
+
+// AttendanceCorrectionRequests
+Route::prefix('/attendances/correction-requests')
+  ->name('attendances.correction-requests.')
+  ->group(function () {
+    // Route::get('/index', [AttendanceCorrectionRequestController::class, 'index'])->name('index');
+    // Route::get('/create', [AttendanceCorrectionRequestController::class, 'create'])->name('create');
+    Route::post('/', [AttendanceCorrectionRequestController::class, 'store'])->name('store');
+    // Route::get('/show',[AttendanceCorrectionRequestController::class, 'show'])->name('show');
+    // Route::get('/{id}/edit', [AttendanceCorrectionRequestController::class, 'edit'])->name('edit');
+    // Route::patch('/{id}', [AttendanceCorrectionRequestController::class, 'update'])->name('update');
+    // Route::delete('/{id}', [AttendanceCorrectionRequestController::class, 'destroy'])->name('destroy');
+  });
+
+// AdminAttendanceRequests
+Route::middleware(['auth', 'admin', 'verified'])
+  ->prefix('/admin/attendances')
+  ->name('admin.attendances.')
+  ->group(function () {
+    Route::get('/index', [AdminAttendanceRequestController::class, 'index'])->name('index');
+    Route::get('/{id}', [AdminAttendanceRequestController::class, 'show'])->name('show');
+    Route::patch('/{id}/approve', [AdminAttendanceRequestController::class, 'approve'])->name('approve');
+    Route::patch('/{id}/reject', [AdminAttendanceRequestController::class, 'reject'])->name('reject');
   });
 
 
@@ -92,7 +157,9 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-  return Inertia::render('Dashboard');
+  return Inertia::render('Dashboard', [
+    'authUser' => Auth::user(),
+  ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
