@@ -65,6 +65,9 @@ Route::prefix('companies')
     Route::get('/{id}/edit', [CompanyController::class, 'edit'])->name('edit');
     Route::patch('/{id}', [CompanyController::class, 'update'])->name('update');
     Route::delete('/{id}', [CompanyController::class, 'destroy'])->name('destroy');
+    
+    //会社一覧CSV出力用。URLはハイフンで繋ぐ。メソッド名はキャメル型。
+    Route::get('/export-csv',[CompanyController::class,'exportCsv'])->name('export-csv');
   });
 
 

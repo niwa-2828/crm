@@ -1,6 +1,6 @@
 <script setup>
 import MailSendLayout from "@/Layouts/MailSendLayout.vue"
-import { router,Link } from "@inertiajs/vue3"
+import { router, Link } from "@inertiajs/vue3"
 import FlashMessage from '@/Components/FlashMessage.vue'
 
 defineProps({
@@ -8,7 +8,7 @@ defineProps({
 })
 
 const deleteCompany = id => {
-  router.delete(route('companies.destroy',id ),{
+  router.delete(route('companies.destroy', id), {
     onBefore: () => confirm('本当に削除しますか？')
   })
 }
@@ -16,7 +16,7 @@ const deleteCompany = id => {
 </script>
 
 <template>
- <FlashMessage />
+  <FlashMessage />
   <MailSendLayout>
     <div class="mb-6 flex items-center justify-between">
       <h1 class="text-3xl font-bold">会社一覧</h1>
@@ -25,9 +25,9 @@ const deleteCompany = id => {
         <button @click="router.get(route('companies.create'))" class="rounded bg-blue-600 px-4 py-2 text-white">
           会社登録
         </button>
-        <Link :href="route('mailsend.index')" class="rounded bg-pink-300 ml-1 px-4 py-2 text-white">
-          戻る
-        </Link>
+        <a :href="route('companies.export-csv')" class="rounded bg-green-600 px-4 py-2 text-white">
+          CSV出力
+          </a>
       </div>
     </div>
 
@@ -48,7 +48,8 @@ const deleteCompany = id => {
             </td>
 
             <td class="p-4 text-center">
-              <button @click="router.get(route('companies.edit',company.id))" class="mr-2 rounded bg-yellow-500 px-3 py-1 text-white">
+              <button @click="router.get(route('companies.edit', company.id))"
+                class="mr-2 rounded bg-yellow-500 px-3 py-1 text-white">
                 修正
               </button>
 
@@ -59,6 +60,11 @@ const deleteCompany = id => {
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="mt-3 flex justify-end">
+      <Link :href="route('mailsend.index')" class="rounded bg-pink-300 px-4 py-2 text-white">
+        戻る
+      </Link>
     </div>
   </MailSendLayout>
 </template>

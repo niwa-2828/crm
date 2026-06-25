@@ -8,6 +8,8 @@ use Inertia\Inertia;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 
+use App\Services\CompanyCsvService;
+
 // use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -84,5 +86,35 @@ class CompanyController extends Controller
         'message' => '削除しました。',
         'status' => 'danger'
       ]);
+  }
+
+  // 会社一覧CSV出力
+  public function __construct(
+    private CompanyCsvService $companyCsvService
+  ) {}
+
+  public function exportCsv()
+  {
+    // カラム明示
+    $columns = [
+      'id' => 'ID',
+      'name' => '会社名',
+      'mail' => 'メールアドレス',
+      'created_at' => '作成日時',
+      'updated_at' => '更新日時',
+    ];
+    
+    // 全件取得。ただし、カラムはkeyで。
+    $companies = Company::select(array_keys($columns))->get();
+
+    $fileName = 'companyAll.csv';
+
+
+    // 処理結果を、CSVダウンロードとしてブラウザに返す
+    return response()->streamDownload(function () use ($companies, $columns) {
+      $this->companyCsvService->writingCsv($companies, $columns);
+    }, $fileName, [
+      'Content-Type' => 'text/csv',
+    ]);
   }
 }

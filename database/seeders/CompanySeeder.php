@@ -9,32 +9,41 @@ class CompanySeeder extends Seeder
 {
     public function run()
     {
-        Company::insert([
+        $now = now();
+    
+        $companies = [
             [
-                'id' => 2,
                 'name' => 'kuroki',
                 'mail' => 'kuroki@kuroki.com',
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'id' => 6,
                 'name' => 'niwa',
                 'mail' => 'niwa@niwa.com',
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'id' => 8,
                 'name' => 'watakabe',
                 'mail' => 'watakabe@watakabe.com',
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'id' => 10,
                 'name' => 'Laravel',
                 'mail' => 'laravel@laravel.com',
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
             [
-                'id' => 11,
                 'name' => 'index',
                 'mail' => 'index@index.com',
+                'created_at' => $now,
+                'updated_at' => $now,
             ],
-        ]);
+        ];
+    
+        Company::insert($companies);
     }
 }
