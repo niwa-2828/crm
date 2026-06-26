@@ -48,10 +48,10 @@ Route::get(
 Route::prefix('mailsend')
   ->name('mailsend.')
   ->group(function () {
-Route::get('/', [MailSendController::class, 'index'])->name('index');
-Route::get('/create', [MailSendController::class, 'create'])->name('create');
-Route::post('/confirm', [MailSendController::class, 'confirm'])->name('confirm');
-Route::post('/send', [MailSendController::class, 'send'])->name('send');
+    Route::get('/', [MailSendController::class, 'index'])->name('index');
+    Route::get('/create', [MailSendController::class, 'create'])->name('create');
+    Route::post('/confirm', [MailSendController::class, 'confirm'])->name('confirm');
+    Route::post('/send', [MailSendController::class, 'send'])->name('send');
   });
 
 // Companies
@@ -65,12 +65,13 @@ Route::prefix('companies')
     Route::get('/{id}/edit', [CompanyController::class, 'edit'])->name('edit');
     Route::patch('/{id}', [CompanyController::class, 'update'])->name('update');
     Route::delete('/{id}', [CompanyController::class, 'destroy'])->name('destroy');
-    
-    //会社一覧CSV出力用。URLはハイフンで繋ぐ。メソッド名はキャメル型。
-    Route::get('/export-csv',[CompanyController::class,'exportCsv'])->name('export-csv');
+
+    // 会社一覧CSV出力用。URLはハイフンで繋ぐ。メソッド名はキャメル型。
+    Route::get('/export-csv', [CompanyController::class, 'exportCsv'])->name('export-csv');
+
+    // 会社一覧PDFをダウンロードするためのルート
+    Route::get('/export-pdf', [CompanyController::class, 'exportPdf'])->name('export-pdf');
   });
-
-
 
 // Employees
 Route::prefix('employees')

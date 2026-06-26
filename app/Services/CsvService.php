@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-class CompanyCsvService
+class CsvService
 {
     public function writingCsv(iterable $records, array $columns): void
     {

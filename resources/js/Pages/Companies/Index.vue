@@ -25,9 +25,16 @@ const deleteCompany = id => {
         <button @click="router.get(route('companies.create'))" class="rounded bg-blue-600 px-4 py-2 text-white">
           会社登録
         </button>
+
+        <!--CSV出力-->
         <a :href="route('companies.export-csv')" class="rounded bg-green-600 px-4 py-2 text-white">
           CSV出力
-          </a>
+        </a>
+        
+        <!--PDFダウンロード-->
+        <a :href="route('companies.export-pdf')" class="rounded bg-yellow-600 px-4 py-2 text-white hover:bg-yellow-700">
+          PDFダウンロード
+        </a>
       </div>
     </div>
 
